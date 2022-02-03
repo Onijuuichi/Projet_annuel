@@ -14,13 +14,19 @@ import re
 ##------------Calcul nombre d'interruption (dose prescrite!=dose reçu) ---------##
 
 def extraction_dose_prescrite(fichier_out, regle):
-    dose_prescrite=fichier_out["NombreFractionsPrescrites"]  
-    dose_prescrite.to_txt('dose_prescrite.txt')             
+   fichier = open(fichier_out, "r")
+   liste_match=[]
+   for ligne in fichier:
+       match=regle.search(ligne)
+       if match:
+           liste_match.append(match.group())
+   fichier.close()
+   return(liste_match);          
     
         
 
 ##---------Test------##
-fichier_out= pd.read_csv('C:/Users/sshan/OneDrive/Documents/COURS M1/PROJET ANNUEL/Projet_annuel/out.csv', sep=',', header=0)
-fichier_out.index=fichier_out.id
+
+
 regle=re.compile(r"^(\d*)", re.IGNORECASE)
-print (extraction_dose_prescrite(fichier_out, regle))
+print (extraction_dose_prescrite("out.txt", regle))
