@@ -11,10 +11,17 @@ import numpy as np
 import pandas as pd
 import re
 
-##------------Calcul nombre d'interruption (dose prescrite!=dose reçu) ---------##
+
 
 class Interruption:
     
+##----------------Constructeur---------------------##
+
+    def __init__(self, fichier_out):
+        self.fichier_out=fichier_out;
+        
+##------------Calcul nombre d'interruption (dose prescrite!=dose reçu) ---------##
+        
     def extraction_dose_prescrite(fichier_out, regle):
         liste_match_prescrite=[]
         for ligne in fichier_out['NombreFractionsPrescrites']:
@@ -43,7 +50,7 @@ class Interruption:
 
 #--------------------------------------------------------------------------------# 
      
-##---------Test------##
+##---------Test-----------##
 
 fichier_out = pd.read_csv("/Users/sshan/OneDrive/Documents/COURS M1/PROJET ANNUEL/Projet_annuel/out.txt", sep='\t', index_col=0)
 regle_doses=re.compile(r"^(\d*)", re.IGNORECASE)
