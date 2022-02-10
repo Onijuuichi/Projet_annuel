@@ -28,7 +28,7 @@ class Interruption:
             match=regle.search(ligne)
             if match:
                 liste_match_prescrite.append(match.group())
-        return(liste_match_prescrite);          
+        return(liste_match_prescrite)        
       
 #------------------------------------------------------------------------------#
     
@@ -38,19 +38,18 @@ class Interruption:
             match=regle.search(ligne)
             if match:
                 liste_match_recu.append(match.group())
-        return(liste_match_recu); 
+        return(liste_match_recu) 
  
 #-------------------------------------------------------------------------------#       
  
     def calcul_nb_interruption(fichier_out, regle):
-        cpt=0
+        interruption=0
         liste_match_prescrite=Interruption.extraction_dose_prescrite(fichier_out, regle)
         liste_match_recu=Interruption.extraction_dose_recu(fichier_out, regle)
-        for i in liste_match_prescrite:
-            for j in liste_match_recu:
-                if(liste_match_prescrite[i]!=(liste_match_recu[j])):
-                    cpt=cpt+1      
-        return(cpt) 
+        for i in range(len(liste_match_prescrite)):
+                if (liste_match_prescrite[i]!=liste_match_recu[i]):
+                    interruption=interruption+1
+        return(interruption) 
 
 #------------------------------------------------------------------------------# 
      
@@ -58,7 +57,7 @@ class Interruption:
 
 fichier_out = pd.read_csv("/Users/sshan/OneDrive/Documents/COURS M1/PROJET ANNUEL/Projet_annuel/out.txt", sep='\t', index_col=0)
 regle_doses=re.compile(r"^(\d*)", re.IGNORECASE)
-print ("liste du nb de dose prescrite : " , Interruption.extraction_dose_prescrite(fichier_out, regle_doses))
-print("-------------------------------------------------------")
-print ("liste du nb de dose delivrees : ",  Interruption.extraction_dose_recu(fichier_out, regle_doses))
+#print ("liste du nb de dose prescrite : " , Interruption.extraction_dose_prescrite(fichier_out, regle_doses))
+#print("-------------------------------------------------------")
+#print ("liste du nb de dose delivrees : ",  Interruption.extraction_dose_recu(fichier_out, regle_doses))
 print("nombre d'interruption : ", Interruption.calcul_nb_interruption(fichier_out, regle_doses))
