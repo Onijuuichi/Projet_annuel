@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 import re
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 class Interruption:
     
@@ -75,15 +76,25 @@ class Interruption:
 #--------------Calcul final et affichage des résultats par an-------------------# 
     
     def calcul(fichier_out, regle1, regle2):
+        interruption_liste=[]
         print("Nombre d'interruption :")
         tot_interruption=Interruption.calcul_nb_interruption(fichier_out, regle1)
         if(tot_interruption>0):
             for i in range(1955, 2050):
                 interruption=Interruption.calcul_nb_interruption_par_an(fichier_out, regle1, regle2, i)
                 if (interruption>0):
+                    interruption_liste.append(interruption)
                     pourcent=(interruption/tot_interruption*100)
                     pourcent=round(pourcent, 1)
                     print("En", i, ":", interruption, "(", pourcent, "% )")
+            #df = pd.DataFrame(interruption_liste, columns = ['interruption'], index=['20' + str(i) for i in range(14,22)]) 
+            color=sns.color_palette('pastel')
+            fig = plt.figure(1, figsize=(10, 10))
+            plt.pie(interruption_liste, labels =['20' + str(i) for i in range(14,22)], colors=color, autopct="%.1f%%")
+            plt.legend(interruption_liste)
+            plt.title('Pourcentage d\'interruption de traitement par année')
+            plt.savefig('/Users/sshan/OneDrive/Documents/COURS M1/PROJET ANNUEL/Projet_annuel/Camembert_interruption.png')
+            plt.show()
                     
         else:
             print("Aucune interruption.")
