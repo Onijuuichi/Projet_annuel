@@ -18,21 +18,12 @@ fenetre.title("Traitement des données du centre Oscar Lambret")
 ##Changer taille fenêtre
 fenetre.geometry("640x480")
 
-def browseFiles(): 
-    filename = filedialog.askopenfilename(initialdir = "/", 
-                                          title = "Select a File", 
-                                          filetypes = (("Text files", 
-                                                        "*.txt*"), 
-                                                       ("all files", 
-                                                        "*.*"))) 
-       
-    
-    label_file_explorer.configure(text="File Opened: "+filename)
+Type = [("Json files", ".json")]
 
-label_file_explorer = Label(fenetre,  
-                            text = "File Explorer using Tkinter", 
-                            width = 100, height = 4,  
-                            fg = "blue") 
+def browseFiles():
+    file = filedialog.askopenfilename(title="Select a File", filetypes=Type)
+    print(f"Vous avez sélectionné :\n{file}")
+    return file
  
 
 def aide():
@@ -49,6 +40,11 @@ def aide():
   champ_label.grid(row=3, column=0)
   champ_label = Label(fenetreAide, text="En cours de développement")
   champ_label.grid(row=4, column=0)
+
+
+#def quitter():
+
+
 
 
 ##----------Titre du graphique---------##
